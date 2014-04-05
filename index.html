@@ -11,48 +11,28 @@
       src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA8GdfZRp_Cs7M1eJqaAUiobusR3kC2H30&libraries=places&sensor=true">
     </script>
     <script type="text/javascript">
-  var initialLocation;
-  var siberia = new google.maps.LatLng(60, 105);
-  var newyork = new google.maps.LatLng(40.69847032728747, -73.9514422416687);
-  var browserSupportFlag =  new Boolean();
-  var service;
-  var resultList;
+  var map;
+var infowindow;
 
-    function initialize() {
-      var mapOptions = {
-        zoom: 14
-      };
-      var map = new google.maps.Map(document.getElementById("map-canvas"),
-          mapOptions);
-   // Try W3C Geolocation (Preferred)
-  if(navigator.geolocation) {
-    browserSupportFlag = true;
-    navigator.geolocation.getCurrentPosition(function(position) {
-      initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-      var request = {
-        location: initialLocation,
-        radius: '10000',
-        types: ['liquor_store']
-      };
-      
-      map.setCenter(initialLocation);
+function initialize() {
+  var collegepark = new google.maps.LatLng(38.998334,-76.9372489);
 
-      infowindow = new google.maps.InfoWindow();
-  var service = new google.maps.places.PlacesService(map);
-  service.nearbySearch(request, callback);
+  map = new google.maps.Map(document.getElementById('map-canvas'), {
+    center: collegepark,
+    zoom: 15
   });
 
-    }, function() {
-      handleNoGeolocation(browserSupportFlag);
-    });
-  }
-  // Browser doesn't support Geolocation
-  else {
-    browserSupportFlag = false;
-    handleNoGeolocation(browserSupportFlag);
-  }
-  
-    function callback(results, status) {
+  var request = {
+    location: collegepark,
+    radius: 5000,
+    types: ['liquor_store']
+  };
+  infowindow = new google.maps.InfoWindow();
+  var service = new google.maps.places.PlacesService(map);
+  service.nearbySearch(request, callback);
+}
+
+function callback(results, status) {
   if (status == google.maps.places.PlacesServiceStatus.OK) {
     for (var i = 0; i < results.length; i++) {
       createMarker(results[i]);
@@ -73,18 +53,7 @@ function createMarker(place) {
   });
 }
 
-  function handleNoGeolocation(errorFlag) {
-    if (errorFlag == true) {
-      alert("Geolocation service failed. Please try again.");
-      initialLocation = newyork;
-    } else {
-      alert("Please enable location services to help us find you your favorite brews. Sincerely, Brewze.");
-      initialLocation = siberia;
-    }
-    map.setCenter(initialLocation);
-  }
-      }
-      google.maps.event.addDomListener(window, 'load', initialize);
+google.maps.event.addDomListener(window, 'load', initialize);
     </script>
   </head>
   <body>
