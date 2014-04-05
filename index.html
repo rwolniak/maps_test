@@ -29,10 +29,9 @@
       initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
       var request = {
         location: initialLocation,
-        radius: '5000',
+        radius: '10000',
         types: ['liquor_store']
       };
-      map.setCenter(initialLocation);
 
       service = new google.maps.places.PlacesService(map);
       service.nearbySearch(request, function(results, status, pagination) {
