@@ -34,6 +34,8 @@
         radius: '10000',
         types: ['liquor_store']
       };
+      
+      map.setCenter(initialLocation);
 
       service = new google.maps.places.PlacesService(map);
       service.nearbySearch(request, function(results, status, pagination) {
