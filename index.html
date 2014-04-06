@@ -13,22 +13,29 @@
     <script type="text/javascript">
     var map;
     var infowindow;
+    
+    function success(pos) {
+      var userLocation = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+      
+      map = new google.maps.Map(document.getElementById('map-canvas'), {
+        center: userLocation,
+        zoom: 14
+      });
+
+      var request = {
+        location: userLocation,
+        radius: 5000,
+        types: ['liquor_store']
+      };
+      infowindow = new google.maps.InfoWindow();
+      var service = new google.maps.places.PlacesService(map);
+      service.nearbySearch(request, callback);
+    }
 
 function initialize() {
-  var userLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-  map = new google.maps.Map(document.getElementById('map-canvas'), {
-    center: userLocation,
-    zoom: 14
-  });
 
-  var request = {
-    location: userLocation,
-    radius: 5000,
-    types: ['liquor_store']
-  };
-  infowindow = new google.maps.InfoWindow();
-  var service = new google.maps.places.PlacesService(map);
-  service.nearbySearch(request, callback);
+  navigator.geolocation.getCurrentPosition(success);
+  
 }
 
 function callback(results, status) {
