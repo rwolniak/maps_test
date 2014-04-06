@@ -15,15 +15,14 @@
     var infowindow;
 
 function initialize() {
-  var collegepark = new google.maps.LatLng(38.998334,-76.9372489);
-
+  var userLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
   map = new google.maps.Map(document.getElementById('map-canvas'), {
-    center: collegepark,
-    zoom: 15
+    center: userLocation,
+    zoom: 14
   });
 
   var request = {
-    location: collegepark,
+    location: userLocation,
     radius: 5000,
     types: ['liquor_store']
   };
