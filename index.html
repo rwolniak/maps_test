@@ -32,37 +32,35 @@
       service.nearbySearch(request, callback);
     }
 
-function initialize() {
-
-  navigator.geolocation.getCurrentPosition(success);
-  
-}
-
-function callback(results, status) {
-  if (status == google.maps.places.PlacesServiceStatus.OK) {
-    for (var i = 0; i < results.length; i++) {
-      createMarker(results[i]);
+    function initialize() {
+      navigator.geolocation.getCurrentPosition(success);
     }
-  }
-}
 
-function createMarker(place) {
-  var placeLoc = place.geometry.location;
-  var marker = new google.maps.Marker({
-    map: map,
-    position: place.geometry.location
-  });
+    function callback(results, status) {
+      if (status == google.maps.places.PlacesServiceStatus.OK) {
+        for (var i = 0; i < results.length; i++) {
+          createMarker(results[i]);
+        }
+      }
+    }
 
-  google.maps.event.addListener(marker, 'click', function() {
-    infowindow.setContent(place.name);
-    infowindow.open(map, this);
-  });
-}
-		if(navigator.geolocation){
-			google.maps.event.addDomListener(window,'load',initialize);
-		} else {
-			error('Please turn location services on to allow Brewze to find you your favorite brews.');
-		}
+    function createMarker(place) {
+      var placeLoc = place.geometry.location;
+      var marker = new google.maps.Marker({
+        map: map,
+        position: place.geometry.location
+      });
+
+      google.maps.event.addListener(marker, 'click', function() {
+        infowindow.setContent(place.name);
+        infowindow.open(map, this);
+      });
+    }
+    if(navigator.geolocation){
+    	google.maps.event.addDomListener(window,'load',initialize);
+    } else {
+	error('Please turn location services on to allow Brewze to find you your favorite brews.');
+    }
     </script>
   </head>
   <body>
