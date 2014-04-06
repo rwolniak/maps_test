@@ -52,7 +52,7 @@
       });
 
       google.maps.event.addListener(marker, 'click', function() {
-        infowindow.setContent(place.name);
+        infowindow.setContent(place.name + "<br />" + place.formatted_address);
         infowindow.open(map, this);
       });
     }
